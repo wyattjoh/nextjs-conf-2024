@@ -1,4 +1,6 @@
 import type { User } from "@prisma/client";
+import Image from "next/image";
+import { Card, CardFooter } from "./card";
 
 type Props = {
   title: string;
@@ -8,22 +10,34 @@ type Props = {
 
 export default function Contributors({ title, contributors, took }: Props) {
   return (
-    <div className="flex flex-col gap-4">
+    <Card>
       <h2 className="text-lg font-bold">Loaded from {title}</h2>
       <ul className="flex flex-col gap-2 min-w-[300px]">
         {contributors.map((contributor) => (
           <li key={contributor.id}>
             <div className="flex justify-between items-center">
-              {contributor.name}
+              <a
+                className="flex items-center gap-2"
+                href={`/user/${contributor.name}`}
+              >
+                <Image
+                  className="rounded-full h-6 w-6 inline-block"
+                  src={contributor.avatar}
+                  alt={contributor.name}
+                  height={24}
+                  width={24}
+                />
+                {contributor.name}
+              </a>
               <span className="text-xs">{contributor.contributions}</span>
             </div>
           </li>
         ))}
       </ul>
-      <div className="text-xs text-gray-500">
+      <CardFooter>
         <p>Time taken: {took.toFixed(2)}ms</p>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }
 
@@ -35,16 +49,16 @@ export function ContributorsSkeleton({
   take: number;
 }) {
   return (
-    <div className="flex flex-col gap-4">
+    <Card>
       <h2 className="text-lg font-bold">Loaded from {title}</h2>
       <ul className="flex flex-col gap-2 min-w-[300px]">
         {Array.from({ length: take }).map((_, i) => (
           <li key={i} className="w-full h-[24px] bg-gray-50  animate-pulse" />
         ))}
       </ul>
-      <div className="text-xs text-gray-500">
+      <CardFooter>
         <p>Time taken: ...</p>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }
