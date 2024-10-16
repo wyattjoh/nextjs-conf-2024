@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { connection } from "next/server";
-import { Suspense } from "react";
+import { Client } from "./client";
+import Server from "./server";
 
 const prisma = new PrismaClient();
 
@@ -32,62 +32,15 @@ async function update() {
   revalidatePath("/");
 }
 
-function ContributorsSkeleton({ take }: { take: number }) {
-  return (
-    <>
-      <ul className="flex flex-col gap-2 min-w-[500px]">
-        {Array.from({ length: take }).map((_, i) => (
-          <li key={i} className="w-full h-[24px] bg-gray-50  animate-pulse" />
-        ))}
-      </ul>
-      <div className="text-xs text-gray-500">
-        <p className="flex items-center">
-          Time taken:{" "}
-          <span className="inline-block bg-gray-50 w-20 h-4 animate-pulse ml-1" />
-        </p>
-      </div>
-    </>
-  );
-}
-
-async function Contributors({ take }: { take: number }) {
-  // We always want the following database query to be uncached.
-  await connection();
-
-  const start = performance.now();
-  const contributors = await prisma.user.findMany({
-    orderBy: { contributions: "desc" },
-    take,
-  });
-  const end = performance.now();
-
-  return (
-    <>
-      <ul className="flex flex-col gap-2 min-w-[500px]">
-        {contributors.map((contributor) => (
-          <li key={contributor.id}>
-            <div className="flex justify-between items-center">
-              {contributor.name}
-              <span className="text-xs">{contributor.contributions}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div className="text-xs text-gray-500">
-        <p>Time taken: {(end - start).toFixed(2)}ms</p>
-      </div>
-    </>
-  );
-}
-
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-end sm:items-start">
         <h1 className="text-4xl font-bold">Next.js Contributors</h1>
-        <Suspense fallback={<ContributorsSkeleton take={20} />}>
-          <Contributors take={20} />
-        </Suspense>
+        <div className="grid grid-cols-2 gap-8">
+          <Client />
+          <Server />
+        </div>
         <form action={update}>
           <button
             type="submit"
