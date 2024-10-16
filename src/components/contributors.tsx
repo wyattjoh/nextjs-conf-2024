@@ -21,7 +21,7 @@ export default function Contributors({ title, contributors, took }: Props) {
         ))}
       </ul>
       <div className="text-xs text-gray-500">
-        <p>Time taken: {took}ms</p>
+        <p>Time taken: {took.toFixed(2)}ms</p>
       </div>
     </div>
   );
