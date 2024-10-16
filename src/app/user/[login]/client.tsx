@@ -9,24 +9,24 @@ function ClientContainer({ start }: { start: number }) {
   const { login } = useParams();
 
   const [user, setUser] = useState<User | null>(null);
-  const [end, setEnd] = useState(0);
+  const [took, setTook] = useState(0);
 
   useEffect(() => {
     const fetchUser = async () => {
       const res = await fetch(`/api/contributor/${login}`);
       const user = await res.json();
       const end = Date.now();
+      setTook(end - start);
       setUser(user);
-      setEnd(end);
     };
     fetchUser();
-  }, [login]);
+  }, [login, start]);
 
   if (!user) {
     return <ContributorSkeleton title="Client" />;
   }
 
-  return <Contributor title="Client" user={user} took={end - start} />;
+  return <Contributor title="Client" user={user} took={took} />;
 }
 
 type Props = {

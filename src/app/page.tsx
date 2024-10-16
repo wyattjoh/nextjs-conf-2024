@@ -43,22 +43,20 @@ export default function Home() {
   const start = Date.now();
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-end sm:items-start">
-        <h1 className="text-4xl font-bold">Next.js Contributors</h1>
-        <div className="grid grid-cols-2 gap-8 min-w-[600px]">
-          <Client start={start} />
-          <Server start={start} />
-        </div>
-        <form action={update}>
-          <button
-            type="submit"
-            className="border border-gray-500 text-gray-500 px-2 py-1 rounded-full text-xs hover:bg-gray-50"
-          >
-            Update Contributors
-          </button>
-        </form>
-      </main>
-    </div>
+    <main className="flex flex-col gap-8 m-8">
+      <h1 className="text-4xl font-bold">Next.js Contributors</h1>
+      <div className="flex gap-8">
+        <Client start={start} />
+        <Server start={start} />
+      </div>
+      <form action={update}>
+        <button
+          type="submit"
+          className="bg-gray-50 text-gray-400 hover:bg-gray-100 px-2 py-1 rounded-full text-xs hover:bg-gray-50"
+        >
+          Update Contributors
+        </button>
+      </form>
+    </main>
   );
 }
