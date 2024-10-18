@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className="flex flex-col gap-8 m-8">
       <h1 className="text-4xl font-bold">Next.js Contributors</h1>
-      <div className="flex gap-8 sm:flex-col">
+      <div className="flex gap-8 lg:flex-row flex-col">
         <Client start={start} />
         <Server start={start} />
       </div>

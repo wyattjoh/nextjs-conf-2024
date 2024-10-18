@@ -16,7 +16,7 @@ export default async function UserPage({ params }: Props) {
       <a href="/" className="text-sm text-gray-500">
         &lt; Back to contributors
       </a>
-      <div className="flex gap-8 sm:flex-col">
+      <div className="flex gap-8 lg:flex-row flex-col">
         <Client start={start} />
         <Server start={start} params={params} />
       </div>
