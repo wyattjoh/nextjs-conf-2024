@@ -10,13 +10,11 @@ type Props = {
 
 export function Client({ start }: Props) {
   const [contributors, setContributors] = useState<User[]>([]);
-  const [took, setTook] = useState(0);
 
   useEffect(() => {
     fetch("/api/contributors")
       .then((res) => res.json())
       .then((users) => {
-        setTook(Date.now() - start);
         setContributors(users);
       });
   }, [start]);
@@ -26,6 +24,6 @@ export function Client({ start }: Props) {
   }
 
   return (
-    <Contributors title="Client" contributors={contributors} took={took} />
+    <Contributors title="Client" contributors={contributors} start={start} />
   );
 }

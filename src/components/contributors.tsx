@@ -1,14 +1,16 @@
 import type { User } from "@prisma/client";
 import Image from "next/image";
 import { Card, CardFooter } from "./card";
+import TimeTaken from "./time-taken";
+import Link from "next/link";
 
 type Props = {
   title: string;
   contributors: User[];
-  took: number;
+  start: number;
 };
 
-export default function Contributors({ title, contributors, took }: Props) {
+export default function Contributors({ title, contributors, start }: Props) {
   return (
     <Card>
       <h2 className="text-lg font-bold">Loaded from {title}</h2>
@@ -18,25 +20,25 @@ export default function Contributors({ title, contributors, took }: Props) {
             key={contributor.id}
             className="flex justify-between items-center"
           >
-            <a
-              className="flex items-center gap-2"
+            <Link
+              className="flex items-center gap-2 underline hover:text-gray-500"
               href={`/user/${contributor.name}`}
             >
               <Image
                 className="rounded-full h-6 w-6 inline-block"
-                src={contributor.avatar}
+                src={`${contributor.avatar}&t=${encodeURIComponent(title)}`}
                 alt={contributor.name}
                 height={24}
                 width={24}
               />
               {contributor.name}
-            </a>
+            </Link>
             <span className="text-xs">{contributor.contributions}</span>
           </li>
         ))}
       </ul>
       <CardFooter>
-        <p>Time taken: {took.toFixed(2)}ms</p>
+        <TimeTaken start={start} />
       </CardFooter>
     </Card>
   );

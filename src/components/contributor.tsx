@@ -1,15 +1,16 @@
 import { User } from "@prisma/client";
 import Image from "next/image";
 import { Card, CardFooter } from "./card";
+import TimeTaken from "./time-taken";
 
 export default function Contributor({
   title,
   user,
-  took,
+  start,
 }: {
   title: string;
   user: User;
-  took: number;
+  start: number;
 }) {
   return (
     <Card>
@@ -18,7 +19,7 @@ export default function Contributor({
         <div className="flex gap-6 items-center">
           <Image
             className="rounded-full inline-block h-48 w-48"
-            src={user.avatar}
+            src={`${user.avatar}&t=${encodeURIComponent(title)}`}
             alt={user.name}
             height={200}
             width={200}
@@ -33,7 +34,7 @@ export default function Contributor({
         </div>
       </div>
       <CardFooter>
-        <p>Time taken: {took.toFixed(2)}ms</p>
+        <TimeTaken start={start} />
       </CardFooter>
     </Card>
   );

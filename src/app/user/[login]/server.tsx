@@ -29,7 +29,7 @@ async function ServerContainer({ start, params }: Props) {
     notFound();
   }
 
-  return <Contributor title="Server" user={user} took={Date.now() - start} />;
+  return <Contributor title="Server" user={user} start={start} />;
 }
 
 export default function Server({ start, params }: Props) {

@@ -19,14 +19,9 @@ async function ContributorsContainer({
     orderBy: { contributions: "desc" },
     take,
   });
-  const end = Date.now();
 
   return (
-    <Contributors
-      title="Server"
-      contributors={contributors}
-      took={end - start}
-    />
+    <Contributors title="Server" contributors={contributors} start={start} />
   );
 }
 
