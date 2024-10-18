@@ -1,43 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-import { revalidatePath } from "next/cache";
+import { update } from "./actions";
 import { Client } from "./client";
 import Server from "./server";
-
-const prisma = new PrismaClient();
-
-async function update() {
-  "use server";
-
-  const contributors = await fetch(
-    "https://api.github.com/repos/vercel/next.js/contributors",
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      },
-    }
-  ).then((res) => res.json());
-
-  await prisma.$transaction([
-    prisma.user.deleteMany(),
-    prisma.user.createMany({
-      data: contributors.map(
-        (contributor: {
-          id: number;
-          login: string;
-          avatar_url: string;
-          contributions: number;
-        }) => ({
-          id: contributor.id,
-          name: contributor.login,
-          avatar: contributor.avatar_url,
-          contributions: contributor.contributions,
-        })
-      ),
-    }),
-  ]);
-
-  revalidatePath("/");
-}
 
 export default function Home() {
   const start = Date.now();
@@ -45,7 +8,7 @@ export default function Home() {
   return (
     <main className="flex flex-col gap-8 m-8">
       <h1 className="text-4xl font-bold">Next.js Contributors</h1>
-      <div className="flex gap-8">
+      <div className="flex gap-8 sm:flex-col">
         <Client start={start} />
         <Server start={start} />
       </div>

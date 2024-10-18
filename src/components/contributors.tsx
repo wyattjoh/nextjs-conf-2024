@@ -2,7 +2,6 @@ import type { User } from "@prisma/client";
 import Image from "next/image";
 import { Card, CardFooter } from "./card";
 import TimeTaken from "./time-taken";
-import Link from "next/link";
 
 type Props = {
   title: string;
@@ -20,7 +19,7 @@ export default function Contributors({ title, contributors, start }: Props) {
             key={contributor.id}
             className="flex justify-between items-center"
           >
-            <Link
+            <a
               className="flex items-center gap-2 underline hover:text-gray-500"
               href={`/user/${contributor.name}`}
             >
@@ -32,7 +31,7 @@ export default function Contributors({ title, contributors, start }: Props) {
                 width={24}
               />
               {contributor.name}
-            </Link>
+            </a>
             <span className="text-xs">{contributor.contributions}</span>
           </li>
         ))}

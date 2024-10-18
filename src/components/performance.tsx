@@ -67,15 +67,15 @@ const PerformanceMetrics = () => {
   const scale = 100 / maxTime;
 
   const ttfbWidth = ttfb * scale;
-  const fcpWidth = (fcp - ttfb) * scale;
-  const lcpWidth = (lcp - fcp) * scale;
+  const fcpWidth = fcp * scale;
+  const lcpWidth = lcp * scale;
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-gray-50 p-4 border-t border-gray-200 space-y-2">
+    <div className="w-full bg-gray-50 p-4 border-t border-gray-200 space-y-2">
       <h1 className="text-lg font-bold">Core Web Vitals</h1>
       <div className="space-y-2">
         <div
-          className="h-4 w-full bg-gray-200 rounded-full relative overflow-hidden flex"
+          className="h-12 w-full bg-gray-200 relative flex flex-col"
           role="img"
           aria-label="Web Vitals Timeline"
         >

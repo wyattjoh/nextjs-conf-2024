@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Client from "./client";
 import Server from "./server";
 
@@ -14,10 +13,10 @@ export default async function UserPage({ params }: Props) {
   return (
     <main className="flex flex-col gap-8 m-8">
       <h1 className="text-4xl font-bold">Next.js Contributor</h1>
-      <Link href="/" className="text-sm text-gray-500">
+      <a href="/" className="text-sm text-gray-500">
         &lt; Back to contributors
-      </Link>
-      <div className="flex gap-8">
+      </a>
+      <div className="flex gap-8 sm:flex-col">
         <Client start={start} />
         <Server start={start} params={params} />
       </div>
