@@ -1,3 +1,4 @@
+import PerformanceMetrics from "@/components/performance";
 import Client from "./client";
 import Server from "./server";
 
@@ -11,15 +12,18 @@ export default async function UserPage({ params }: Props) {
   const start = Date.now();
 
   return (
-    <main className="flex flex-col gap-8 m-8">
-      <h1 className="text-4xl font-bold">Next.js Contributor</h1>
-      <a href="/" className="text-sm text-gray-500">
-        &lt; Back to contributors
-      </a>
-      <div className="flex gap-8 lg:flex-row flex-col">
-        <Client start={start} />
-        <Server start={start} params={params} />
-      </div>
-    </main>
+    <>
+      <main className="flex flex-col gap-8 m-8">
+        <h1 className="text-4xl font-bold">Next.js Contributor</h1>
+        <a href="/" className="text-sm text-gray-500">
+          &lt; Back to contributors
+        </a>
+        <div className="flex gap-8 lg:flex-row flex-col">
+          <Client start={start} />
+          <Server start={start} params={params} />
+        </div>
+      </main>
+      <PerformanceMetrics />
+    </>
   );
 }
