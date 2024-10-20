@@ -19,3 +19,12 @@ model User {
   avatar        String
   contributions Int
 }
+
+model Product {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  image       String
+  price       Float
+  rating      Float
+}

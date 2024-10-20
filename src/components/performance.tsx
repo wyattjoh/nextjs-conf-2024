@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Button } from "./ui/button";
+import { Gauge } from "lucide-react";
 
 type Metrics = {
   fcp?: number;
@@ -71,53 +74,63 @@ const PerformanceMetrics = () => {
   const lcpWidth = lcp * scale;
 
   return (
-    <div className="w-full bg-gray-50 p-4 border-t border-gray-200 space-y-2">
-      <h1 className="text-lg font-bold">Core Web Vitals</h1>
-      <div className="space-y-2">
-        <div
-          className="h-12 w-full bg-gray-200 relative flex flex-col"
-          role="img"
-          aria-label="Web Vitals Timeline"
-        >
-          <span
-            className="h-full bg-green-500"
-            style={{ width: `${ttfbWidth}%` }}
-            role="presentation"
-            aria-hidden="true"
-          ></span>
-          <span
-            className="h-full bg-blue-500"
-            style={{ width: `${fcpWidth}%` }}
-            role="presentation"
-            aria-hidden="true"
-          ></span>
-          <span
-            className="h-full bg-purple-500"
-            style={{ width: `${lcpWidth}%` }}
-            role="presentation"
-            aria-hidden="true"
-          ></span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span>0ms</span>
-          <span>{maxTime.toFixed(2)}ms</span>
-        </div>
-        <div className="grid grid-cols-3 gap-4 text-sm">
-          <div className="flex justify-center items-center">
-            <span className="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
-            <span>TTFB: {ttfb}ms</span>
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" className="fixed right-4 bottom-4">
+          <Gauge />
+          Core Web Vitals
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="bottom">
+        <SheetTitle>Core Web Vitals</SheetTitle>
+        <div className="w-full space-y-2">
+          <div className="space-y-2">
+            <div
+              className="h-12 w-full bg-gray-200 relative flex flex-col overflow-hidden rounded-md"
+              role="img"
+              aria-label="Web Vitals Timeline"
+            >
+              <span
+                className="h-full bg-green-500"
+                style={{ width: `${ttfbWidth}%` }}
+                role="presentation"
+                aria-hidden="true"
+              ></span>
+              <span
+                className="h-full bg-blue-500"
+                style={{ width: `${fcpWidth}%` }}
+                role="presentation"
+                aria-hidden="true"
+              ></span>
+              <span
+                className="h-full bg-purple-500"
+                style={{ width: `${lcpWidth}%` }}
+                role="presentation"
+                aria-hidden="true"
+              ></span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span>0ms</span>
+              <span>{maxTime.toFixed(2)}ms</span>
+            </div>
+            <div className="grid grid-cols-3 gap-4 text-sm">
+              <div className="flex justify-center items-center">
+                <span className="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                <span>TTFB: {ttfb}ms</span>
+              </div>
+              <div className="flex justify-center items-center">
+                <span className="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
+                <span>FCP: {fcp}ms</span>
+              </div>
+              <div className="flex justify-center">
+                <span className="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
+                <span>LCP: {lcp}ms</span>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-center items-center">
-            <span className="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
-            <span>FCP: {fcp}ms</span>
-          </div>
-          <div className="flex justify-center">
-            <span className="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
-            <span>LCP: {lcp}ms</span>
-          </div>
         </div>
-      </div>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 
