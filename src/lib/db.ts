@@ -16,7 +16,7 @@ export async function getProduct(id: number): Promise<Product | null> {
 }
 
 export async function getRelatedProducts(id: number): Promise<Product[]> {
-  return prisma.product.findMany({ where: { id: { not: id } } });
+  return prisma.product.findMany({ where: { id: { not: id } }, take: 3 });
 }
 
 export async function getQuantityAvailable(id: number): Promise<number> {

@@ -1,9 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
 import { Button } from "./ui/button";
 import { Gauge } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Metrics = {
   fcp?: number;
@@ -11,52 +18,63 @@ type Metrics = {
   ttfb?: number;
 };
 
+function PerformancePill(props: {
+  value: number;
+  ranges: [number, number, number];
+}) {
+  return (
+    <div
+      className={cn("border rounded-full px-2 py-1 inline-block text-xs", {
+        "text-green-500 border-green-500": props.value < props.ranges[1],
+        "text-yellow-500 border-yellow-500":
+          props.value >= props.ranges[1] && props.value < props.ranges[2],
+        "text-red-500 border-red-500": props.value >= props.ranges[2],
+      })}
+    >
+      {props.value < props.ranges[1]
+        ? "Good"
+        : props.value >= props.ranges[2]
+        ? "Poor"
+        : "Needs Improvement"}
+    </div>
+  );
+}
+
 const PerformanceMetrics = () => {
   const [metrics, setMetrics] = useState<Metrics>({});
 
   useEffect(() => {
-    // Function to log First Contentful Paint (FCP)
-    const logFCP = () => {
-      const observer = new PerformanceObserver((list) => {
-        const entries = list.getEntriesByName("first-contentful-paint");
-        if (entries.length > 0) {
-          const fcpEntry = entries[0];
-          setMetrics((prev) => ({ ...prev, fcp: fcpEntry.startTime }));
-          observer.disconnect();
-        }
-      });
-      observer.observe({ type: "paint", buffered: true });
-    };
-
-    // Function to log Largest Contentful Paint (LCP)
-    const logLCP = () => {
-      const lcpObserver = new PerformanceObserver((list) => {
-        const entries = list.getEntries();
-        const lastEntry = entries[entries.length - 1];
-        setMetrics((prev) => ({ ...prev, lcp: lastEntry.startTime }));
-      });
-      lcpObserver.observe({ type: "largest-contentful-paint", buffered: true });
-    };
-
-    // Function to log Time to First Byte (TTFB)
-    const logTTFB = () => {
-      const [pageNav] = performance.getEntriesByType("navigation");
-      if (pageNav) {
-        const ttfb =
-          (pageNav as PerformanceResourceTiming).responseStart -
-          (pageNav as PerformanceResourceTiming).requestStart;
-        setMetrics((prev) => ({ ...prev, ttfb }));
+    const fcpObserver = new PerformanceObserver((list) => {
+      const entries = list.getEntriesByName("first-contentful-paint");
+      if (entries.length > 0) {
+        const fcpEntry = entries[0];
+        setMetrics((prev) => ({ ...prev, fcp: fcpEntry.startTime }));
+        fcpObserver.disconnect();
       }
-    };
+    });
 
-    // Call the functions to log metrics
-    logFCP();
-    logLCP();
-    logTTFB();
+    fcpObserver.observe({ type: "paint", buffered: true });
 
-    // Cleanup function to disconnect observers if needed
+    const lcpObserver = new PerformanceObserver((list) => {
+      const entries = list.getEntries();
+      const lastEntry = entries[entries.length - 1];
+      setMetrics((prev) => ({ ...prev, lcp: lastEntry.startTime }));
+      lcpObserver.disconnect();
+    });
+
+    lcpObserver.observe({ type: "largest-contentful-paint", buffered: true });
+
+    const [pageNav] = performance.getEntriesByType("navigation");
+    if (pageNav) {
+      const ttfb =
+        (pageNav as PerformanceResourceTiming).responseStart -
+        (pageNav as PerformanceResourceTiming).requestStart;
+      setMetrics((prev) => ({ ...prev, ttfb }));
+    }
+
     return () => {
-      // Add any necessary cleanup here if observers need to be disconnected
+      fcpObserver.disconnect();
+      lcpObserver.disconnect();
     };
   }, []);
 
@@ -76,13 +94,26 @@ const PerformanceMetrics = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="fixed right-4 bottom-4">
+        <Button className="bg-blue-500 text-primary-foreground shadow hover:bg-blue-400">
           <Gauge />
           Core Web Vitals
+          {lcp > 0 && (
+            <span className="absolute -top-4 -right-2 bg-white text-muted-foreground rounded-md flex items-center justify-center text-xs p-1">
+              {lcp}ms
+            </span>
+          )}
         </Button>
       </SheetTrigger>
-      <SheetContent side="bottom">
-        <SheetTitle>Core Web Vitals</SheetTitle>
+      <SheetContent side="bottom" className="flex flex-col gap-4">
+        <div>
+          <SheetTitle className="flex items-center gap-2">
+            <Gauge /> Core Web Vitals
+          </SheetTitle>
+          <SheetDescription>
+            Core Web Vitals are a set of metrics that measure the performance of
+            a website.
+          </SheetDescription>
+        </div>
         <div className="w-full space-y-2">
           <div className="space-y-2">
             <div
@@ -113,18 +144,27 @@ const PerformanceMetrics = () => {
               <span>0ms</span>
               <span>{maxTime.toFixed(2)}ms</span>
             </div>
-            <div className="grid grid-cols-3 gap-4 text-sm">
-              <div className="flex justify-center items-center">
-                <span className="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
-                <span>TTFB: {ttfb}ms</span>
+            <div className="grid grid-cols-3 gap-4 text-sm font-bold">
+              <div className="flex flex-col items-center gap-2">
+                <div className="flex justify-center items-center">
+                  <span className="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                  <span>TTFB: {ttfb}ms</span>
+                </div>
+                <PerformancePill value={ttfb} ranges={[0, 800, 1800]} />
               </div>
-              <div className="flex justify-center items-center">
-                <span className="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
-                <span>FCP: {fcp}ms</span>
+              <div className="flex flex-col items-center gap-2">
+                <div className="flex justify-center items-center">
+                  <span className="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
+                  <span>FCP: {fcp}ms</span>
+                </div>
+                <PerformancePill value={fcp} ranges={[0, 1800, 3000]} />
               </div>
-              <div className="flex justify-center">
-                <span className="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
-                <span>LCP: {lcp}ms</span>
+              <div className="flex flex-col items-center gap-2">
+                <div className="flex justify-center">
+                  <span className="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
+                  <span>LCP: {lcp}ms</span>
+                </div>
+                <PerformancePill value={lcp} ranges={[0, 2500, 4000]} />
               </div>
             </div>
           </div>

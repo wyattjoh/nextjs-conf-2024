@@ -1,5 +1,4 @@
 import { Product } from "@prisma/client";
-import Link from "next/link";
 import Image from "next/image";
 import { Card } from "./ui/card";
 import { use } from "react";
@@ -14,7 +13,7 @@ export default function RelatedProducts(props: Props) {
   return (
     <div className="grid grid-cols-3 gap-6">
       {products.map((relatedProduct) => (
-        <Link href={`/product/${relatedProduct.id}`} key={relatedProduct.id}>
+        <a href={`/product/${relatedProduct.id}`} key={relatedProduct.id}>
           <Card className="p-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer">
             <Image
               src={relatedProduct.image}
@@ -28,7 +27,7 @@ export default function RelatedProducts(props: Props) {
             </h4>
             <p className="text-gray-600">${relatedProduct.price.toFixed(2)}</p>
           </Card>
-        </Link>
+        </a>
       ))}
     </div>
   );

@@ -1,6 +1,7 @@
 import PerformanceMetrics from "@/components/performance";
 import Client from "./client";
 import Server from "./server";
+import { FooterBar } from "@/components/footer-bar";
 
 type Props = {
   params: Promise<{
@@ -23,7 +24,9 @@ export default async function UserPage({ params }: Props) {
           <Server start={start} params={params} />
         </div>
       </main>
-      <PerformanceMetrics />
+      <FooterBar>
+        <PerformanceMetrics />
+      </FooterBar>
     </>
   );
 }

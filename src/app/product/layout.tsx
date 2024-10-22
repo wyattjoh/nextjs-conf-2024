@@ -1,6 +1,8 @@
 import Cart, { CartSkeleton } from "@/components/cart";
+import { FooterBar } from "@/components/footer-bar";
 import PerformanceMetrics from "@/components/performance";
 import { getCart } from "@/lib/cart";
+import { Globe2 } from "lucide-react";
 import { Suspense } from "react";
 
 type Props = {
@@ -15,7 +17,8 @@ export default function ProductLayout({ children }: Props) {
       <div className="flex flex-col lg:flex-row">
         {/* Main Content */}
         <div className="flex-grow p-6 lg:p-12">
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex items-center gap-2 mb-8">
+            <Globe2 />
             <h1 className="text-3xl font-bold text-gray-900">Eco Store</h1>
             <Suspense fallback={<CartSkeleton />}>
               <Cart cart={cart} />
@@ -24,7 +27,9 @@ export default function ProductLayout({ children }: Props) {
           {children}
         </div>
       </div>
-      <PerformanceMetrics />
+      <FooterBar>
+        <PerformanceMetrics />
+      </FooterBar>
     </div>
   );
 }

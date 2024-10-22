@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import Image from "next/image";
-import { Star } from "lucide-react";
 
 import { getProduct, getQuantityAvailable, getRelatedProducts } from "@/lib/db";
 import { notFound } from "next/navigation";
@@ -13,7 +12,6 @@ type Props = {
 
 async function QuantityAvailable(props: { quantity: Promise<number> }) {
   const quantity = await props.quantity;
-
   if (quantity >= 10 || quantity <= 0) return null;
 
   return <span className="text-gray-600">only {quantity} left!</span>;
@@ -36,8 +34,8 @@ async function ProductPage(props: Props) {
   if (!product) return notFound();
 
   return (
-    <>
-      <div className="flex space-x-8 mb-12">
+    <div className="mb-12 space-y-4">
+      <div className="flex space-x-8 mb-8 min-h-72">
         <div className="mb-0">
           <Image
             src={product.image}
@@ -52,21 +50,6 @@ async function ProductPage(props: Props) {
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             {product.name}
           </h2>
-          <div className="flex items-center mb-4">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`h-5 w-5 ${
-                  i < Math.floor(product.rating)
-                    ? "text-yellow-400 fill-current"
-                    : "text-gray-300"
-                }`}
-              />
-            ))}
-            <span className="ml-2 text-gray-600">
-              {product.rating} out of 5
-            </span>
-          </div>
           <p className="text-gray-600 mb-6">{product.description}</p>
           <div className="flex items-center gap-4 mb-6">
             <p className="text-3xl font-bold text-gray-900">
@@ -81,12 +64,14 @@ async function ProductPage(props: Props) {
           </Suspense>
         </div>
       </div>
-      <div className="mt-14">
+      <div>
         <h3 className="text-2xl font-bold text-gray-900 mb-6">
           Related Products
         </h3>
-        <RelatedProducts products={relatedProducts} />
+        <Suspense>
+          <RelatedProducts products={relatedProducts} />
+        </Suspense>
       </div>
-    </>
+    </div>
   );
 }

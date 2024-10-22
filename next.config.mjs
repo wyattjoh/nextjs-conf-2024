@@ -2,7 +2,7 @@
 const nextConfig = {
   experimental: {
     ppr: true,
-    // pprFallbacks: true,
+    dynamicIO: true,
   },
   images: {
     remotePatterns: [{ hostname: "avatars.githubusercontent.com" }],

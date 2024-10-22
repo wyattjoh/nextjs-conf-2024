@@ -1,3 +1,4 @@
+import { FooterBar } from "@/components/footer-bar";
 import { update } from "./actions";
 import { Client } from "./client";
 import Server from "./server";
@@ -23,7 +24,9 @@ export default function Home() {
           </button>
         </form>
       </main>
-      <PerformanceMetrics />
+      <FooterBar>
+        <PerformanceMetrics />
+      </FooterBar>
     </>
   );
 }

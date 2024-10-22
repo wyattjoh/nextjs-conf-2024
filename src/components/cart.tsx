@@ -14,7 +14,6 @@ import {
 } from "./ui/sheet";
 import Image from "next/image";
 import { updateQuantity } from "@/app/product/[id]/actions";
-import Link from "next/link";
 
 type Props = {
   cart: Promise<Cart>;
@@ -65,13 +64,14 @@ export default function Cart(props: Props) {
                           alt={item.product.name}
                           width={50}
                           height={50}
+                          loading="lazy"
                           className="rounded-md mr-4"
                         />
                         <div className="">
                           <p className="font-semibold whitespace-nowrap">
-                            <Link href={`/product/${item.product.id}`}>
+                            <a href={`/product/${item.product.id}`}>
                               {item.product.name}
-                            </Link>
+                            </a>
                           </p>
                           <p className="text-sm text-gray-500">
                             ${item.product.price.toFixed(2)} x {item.quantity}
