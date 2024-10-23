@@ -1,7 +1,12 @@
 import { Suspense } from "react";
 import Image from "next/image";
 
-import { getProduct, getQuantityAvailable, getRelatedProducts } from "@/lib/db";
+import {
+  getProduct,
+  getProducts,
+  getQuantityAvailable,
+  getRelatedProducts,
+} from "@/lib/db";
 import { notFound } from "next/navigation";
 import RelatedProducts from "@/components/related-products";
 import AddToCart from "@/components/add-to-cart";
@@ -23,6 +28,11 @@ export default function Page(props: Props) {
       <ProductPage params={props.params} />
     </Suspense>
   );
+}
+
+export async function generateStaticParams() {
+  const products = await getProducts();
+  return products.map((product) => ({ id: product.id.toString() }));
 }
 
 async function ProductPage(props: Props) {
