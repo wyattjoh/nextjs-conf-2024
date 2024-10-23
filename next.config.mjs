@@ -4,9 +4,6 @@ const nextConfig = {
     ppr: true,
     dynamicIO: true,
   },
-  images: {
-    remotePatterns: [{ hostname: "avatars.githubusercontent.com" }],
-  },
 };
 
 export default nextConfig;

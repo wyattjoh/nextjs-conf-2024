@@ -15,7 +15,6 @@ export default function ProductLayout({ children }: Props) {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="flex flex-col lg:flex-row">
-        {/* Main Content */}
         <div className="flex-grow p-6 lg:p-12">
           <div className="flex items-center gap-2 mb-8">
             <Globe2 />
