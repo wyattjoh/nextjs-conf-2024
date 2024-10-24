@@ -20,17 +20,22 @@ export default function Switcher({ type }: Props) {
 
   let label;
   if (type === "client") {
-    label = "Switch to Server";
+    label = (
+      <p className="flex items-center gap-2">
+        <b>Static</b> <RefreshCcw /> Switch to Dynamic
+      </p>
+    );
   } else {
-    label = "Switch to Client";
+    label = (
+      <p className="flex items-center gap-2">
+        <b>Dynamic</b> <RefreshCcw /> Switch to Static
+      </p>
+    );
   }
 
   return (
-    <Button asChild variant="outline">
-      <a href={href}>
-        <RefreshCcw />
-        {label}
-      </a>
+    <Button asChild>
+      <a href={href}>{label}</a>
     </Button>
   );
 }

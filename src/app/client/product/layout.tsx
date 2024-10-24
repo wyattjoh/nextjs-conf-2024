@@ -1,6 +1,5 @@
 "use client";
 
-import Cart from "@/components/cart/client";
 import { FooterBar } from "@/components/footer-bar";
 import PerformanceMetrics from "@/components/performance";
 import Switcher from "@/components/switcher";
@@ -29,7 +28,6 @@ export default function ClientProductLayout({ children }: Props) {
               <div className="flex items-center gap-2 mb-8">
                 <Globe2 />
                 <h1 className="text-3xl font-bold text-gray-900">Eco Store</h1>
-                <Cart />
               </div>
               {children}
             </div>
