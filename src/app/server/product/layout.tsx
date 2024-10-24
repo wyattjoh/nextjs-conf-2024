@@ -2,6 +2,7 @@ import Cart from "@/components/cart/server";
 import { CartSkeleton } from "@/components/cart/shared";
 import { FooterBar } from "@/components/footer-bar";
 import PerformanceMetrics from "@/components/performance";
+import Switcher from "@/components/switcher";
 import { getCart } from "@/lib/cart";
 import { Globe2 } from "lucide-react";
 import { Suspense } from "react";
@@ -28,6 +29,7 @@ export default function ProductLayout({ children }: Props) {
         </div>
       </div>
       <FooterBar>
+        <Switcher type="server" />
         <PerformanceMetrics />
       </FooterBar>
     </div>

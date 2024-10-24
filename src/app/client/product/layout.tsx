@@ -3,6 +3,7 @@
 import Cart from "@/components/cart/client";
 import { FooterBar } from "@/components/footer-bar";
 import PerformanceMetrics from "@/components/performance";
+import Switcher from "@/components/switcher";
 import { Globe2 } from "lucide-react";
 import { Suspense } from "react";
 
@@ -25,6 +26,7 @@ export default function ClientProductLayout({ children }: Props) {
           </div>
         </div>
         <FooterBar>
+          <Switcher type="client" />
           <PerformanceMetrics />
         </FooterBar>
       </div>
