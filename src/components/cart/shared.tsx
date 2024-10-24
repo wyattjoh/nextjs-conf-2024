@@ -1,7 +1,7 @@
 "use client";
 
 import type { Cart } from "@/lib/cart";
-import { useMemo, useState } from "react";
+import { useActionState, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import {
@@ -29,6 +29,13 @@ export default function CartShared({ cart, action }: Props) {
     [cart]
   );
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [, formAction, isPending] = useActionState(
+    async (state: unknown, formData: FormData) => {
+      await action(formData);
+      return null;
+    },
+    null
+  );
 
   return (
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
@@ -78,26 +85,34 @@ export default function CartShared({ cart, action }: Props) {
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <form action={action}>
+                        <form action={formAction}>
                           <input
                             type="hidden"
                             name="id"
                             value={item.product.id}
                           />
                           <input type="hidden" name="quantity" value="-1" />
-                          <Button size="icon" variant="outline">
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            disabled={isPending}
+                          >
                             <Minus className="h-4 w-4" />
                           </Button>
                         </form>
                         <span>{item.quantity}</span>
-                        <form action={action}>
+                        <form action={formAction}>
                           <input
                             type="hidden"
                             name="id"
                             value={item.product.id}
                           />
                           <input type="hidden" name="quantity" value="1" />
-                          <Button size="icon" variant="outline">
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            disabled={isPending}
+                          >
                             <Plus className="h-4 w-4" />
                           </Button>
                         </form>

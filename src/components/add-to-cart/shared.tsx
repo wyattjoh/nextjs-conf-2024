@@ -3,6 +3,7 @@
 import { addToCart } from "@/app/server/product/[id]/actions";
 import { Button } from "../ui/button";
 import { useActionState } from "react";
+import { useSWRConfig } from "swr";
 
 type Props = {
   id: number;
@@ -10,7 +11,16 @@ type Props = {
 };
 
 export default function AddToCartShared({ id, quantity }: Props) {
-  const [message, formAction, isPending] = useActionState(addToCart, null);
+  const config = useSWRConfig();
+  const [message, formAction, isPending] = useActionState(
+    async (state: unknown, formData: FormData) => {
+      await addToCart(state, formData);
+      config.mutate("/api/cart");
+      config.mutate(`/api/product/${id}/quantity`);
+      return null;
+    },
+    null
+  );
 
   return (
     <form action={formAction} className="flex items-center gap-2">
