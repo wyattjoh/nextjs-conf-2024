@@ -15,11 +15,11 @@ type Props = {
 export default function Page({ params }: Props) {
   return (
     <div className="mb-12 space-y-4">
-      <Suspense fallback={<ProductDetailsSkeleton />}>
-        <ProductDetails params={params} />
-      </Suspense>
       <Suspense fallback={<CartSkeleton />}>
         <Cart cart={getCart()} />
+      </Suspense>
+      <Suspense fallback={<ProductDetailsSkeleton />}>
+        <ProductDetails params={params} />
       </Suspense>
       <div>
         <h3 className="text-2xl font-bold text-gray-900 mb-6">
