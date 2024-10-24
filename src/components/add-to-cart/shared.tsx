@@ -1,21 +1,20 @@
 "use client";
 
 import { addToCart } from "@/app/product/[id]/actions";
-import { Button } from "./ui/button";
-import { use, useActionState } from "react";
+import { Button } from "../ui/button";
+import { useActionState } from "react";
 
 type Props = {
   id: number;
-  quantity: Promise<number>;
+  quantity: number;
 };
 
-export default function AddToCart(props: Props) {
+export default function AddToCartShared({ id, quantity }: Props) {
   const [message, formAction, isPending] = useActionState(addToCart, null);
-  const quantity = use(props.quantity);
 
   return (
     <form action={formAction} className="flex items-center gap-2">
-      <input type="hidden" name="id" value={props.id} />
+      <input type="hidden" name="id" value={id} />
       <input type="hidden" name="quantity" value="1" />
       <Button size="lg" disabled={quantity <= 0}>
         Add to Cart

@@ -1,7 +1,7 @@
 "use client";
 
 import type { Cart } from "@/lib/cart";
-import { use, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import {
@@ -11,16 +11,15 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet";
+} from "../ui/sheet";
 import Image from "next/image";
 import { updateQuantity } from "@/app/product/[id]/actions";
 
 type Props = {
-  cart: Promise<Cart>;
+  cart: Cart;
 };
 
-export default function Cart(props: Props) {
-  const cart = use(props.cart);
+export default function CartShared({ cart }: Props) {
   const totalPrice = useMemo(
     () =>
       cart.reduce(

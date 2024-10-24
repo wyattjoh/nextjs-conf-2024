@@ -19,5 +19,4 @@ model Product {
   description String
   image       String
   price       Float
-  rating      Float
 }

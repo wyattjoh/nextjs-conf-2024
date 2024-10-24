@@ -1,11 +1,9 @@
 import { Suspense } from "react";
 
-import RelatedProducts, {
-  RelatedProductsSkeleton,
-} from "@/components/related-products";
-import ProductDetails, {
-  ProductDetailsSkeleton,
-} from "@/components/product-details";
+import RelatedProducts from "@/components/related-products/server";
+import ProductDetails from "@/components/product-details/server";
+import { ProductDetailsSkeleton } from "@/components/product-details/shared";
+import { RelatedProductsSkeleton } from "@/components/related-products/shared";
 
 type Props = {
   params: Promise<{ id: string }>;

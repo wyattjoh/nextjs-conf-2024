@@ -19,7 +19,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.453.0",
-    "next": "15.0.2-canary.1",
+    "next": "15.0.2-canary.2",
     "prisma": "^5.21.0",
     "react": "19.0.0-rc-28668d39-20241023",
     "react-dom": "19.0.0-rc-28668d39-20241023",

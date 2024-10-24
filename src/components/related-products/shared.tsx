@@ -1,19 +1,15 @@
 import Image from "next/image";
-import { Card } from "./ui/card";
-import { getRelatedProducts } from "@/lib/db";
+import { Card } from "../ui/card";
+import { Product } from "@prisma/client";
 
 type Props = {
-  params: Promise<{ id: string }>;
-  count: number;
+  relatedProducts: Product[];
 };
 
-export default async function RelatedProducts({ params, count }: Props) {
-  const { id } = await params;
-  const products = await getRelatedProducts(parseInt(id), count);
-
+export default function RelatedProductsShared({ relatedProducts }: Props) {
   return (
     <div className="grid grid-cols-3 gap-6">
-      {products.map((relatedProduct) => (
+      {relatedProducts.map((relatedProduct) => (
         <a href={`/product/${relatedProduct.id}`} key={relatedProduct.id}>
           <Card className="p-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer">
             <Image

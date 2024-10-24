@@ -1,9 +1,8 @@
 type Props = {
-  quantity: Promise<number>;
+  quantity: number;
 };
 
-export async function QuantityAvailable(props: Props) {
-  const quantity = await props.quantity;
+export default function QuantityAvailableShared({ quantity }: Props) {
   if (quantity >= 10 || quantity <= 0) return null;
 
   return <span className="text-gray-600">only {quantity} left!</span>;
