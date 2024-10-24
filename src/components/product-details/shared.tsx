@@ -44,6 +44,7 @@ export function ProductDetailsSkeleton() {
   return (
     <div className="flex space-x-8 mb-8 min-h-72">
       <div className="w-[250px] h-[250px] rounded-lg bg-gray-200 animate-pulse" />
+      <div />
     </div>
   );
 }
