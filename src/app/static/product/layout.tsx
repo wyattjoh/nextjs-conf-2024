@@ -33,7 +33,7 @@ export default function ClientProductLayout({ children }: Props) {
             </div>
           </div>
           <FooterBar>
-            <Switcher type="client" />
+            <Switcher type="static" />
             <PerformanceMetrics />
           </FooterBar>
         </div>

@@ -1,15 +1,8 @@
-"use client";
-
-import { use } from "react";
-import type { Cart as CartType } from "@/lib/cart";
+import { getCart } from "@/lib/cart";
 import CartShared from "./shared";
-import { updateQuantity } from "@/app/server/product/[id]/actions";
+import { updateQuantity } from "@/app/dynamic/product/[id]/actions";
 
-type Props = {
-  cart: Promise<CartType>;
-};
-
-export default function Cart(props: Props) {
-  const cart = use(props.cart);
+export default async function Cart() {
+  const cart = await getCart();
   return <CartShared cart={cart} action={updateQuantity} />;
 }

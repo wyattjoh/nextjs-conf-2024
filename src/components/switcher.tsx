@@ -5,21 +5,21 @@ import { Button } from "./ui/button";
 import { RefreshCcw } from "lucide-react";
 
 type Props = {
-  type: "client" | "server";
+  type: "static" | "dynamic";
 };
 
 export default function Switcher({ type }: Props) {
   const pathname = usePathname();
 
   let href = pathname;
-  if (type === "client") {
-    href = href.replace("/client", "/server");
+  if (type === "static") {
+    href = href.replace("/static", "/dynamic");
   } else {
-    href = href.replace("/server", "/client");
+    href = href.replace("/dynamic", "/static");
   }
 
   let label;
-  if (type === "client") {
+  if (type === "static") {
     label = (
       <p className="flex items-center gap-2">
         <b>Static</b> <RefreshCcw /> Switch to Dynamic

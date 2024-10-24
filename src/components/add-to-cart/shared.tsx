@@ -1,6 +1,6 @@
 "use client";
 
-import { addToCart } from "@/app/server/product/[id]/actions";
+import { addToCart } from "@/app/dynamic/product/[id]/actions";
 import { Button } from "../ui/button";
 import { useActionState } from "react";
 import { useSWRConfig } from "swr";

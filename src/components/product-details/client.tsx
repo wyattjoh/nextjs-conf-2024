@@ -1,3 +1,5 @@
+"use client";
+
 import { useParams } from "next/navigation";
 import ProductDetailsShared, { ProductDetailsSkeleton } from "./shared";
 import QuantityAvailableShared from "../quantity/shared";

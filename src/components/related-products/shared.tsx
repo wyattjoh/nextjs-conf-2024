@@ -13,10 +13,10 @@ export default function RelatedProductsShared({ relatedProducts }: Props) {
   const pathname = usePathname();
 
   let prefix;
-  if (pathname.includes("/server")) {
-    prefix = "/server";
+  if (pathname.includes("/static")) {
+    prefix = "/static";
   } else {
-    prefix = "/client";
+    prefix = "/dynamic";
   }
 
   return (

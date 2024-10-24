@@ -6,7 +6,6 @@ import { ProductDetailsSkeleton } from "@/components/product-details/shared";
 import { RelatedProductsSkeleton } from "@/components/related-products/shared";
 import Cart from "@/components/cart/server";
 import { CartSkeleton } from "@/components/cart/shared";
-import { getCart } from "@/lib/cart";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -16,7 +15,7 @@ export default function Page({ params }: Props) {
   return (
     <div className="mb-12 space-y-4">
       <Suspense fallback={<CartSkeleton />}>
-        <Cart cart={getCart()} />
+        <Cart />
       </Suspense>
       <Suspense fallback={<ProductDetailsSkeleton />}>
         <ProductDetails params={params} />

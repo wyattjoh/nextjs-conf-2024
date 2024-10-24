@@ -13,10 +13,10 @@ export default function Page() {
         </div>
         <div className="flex gap-2 justify-center">
           <Button size="lg" asChild variant="outline">
-            <a href="/client/product/1">Client</a>
+            <a href="/static/product/1">Static</a>
           </Button>
           <Button size="lg" asChild variant="outline">
-            <a href="/server/product/1">Server</a>
+            <a href="/dynamic/product/1">Dynamic</a>
           </Button>
         </div>
       </div>

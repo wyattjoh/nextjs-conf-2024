@@ -22,7 +22,7 @@ export default function ProductLayout({ children }: Props) {
       </div>
       <FooterBar>
         <Suspense>
-          <Switcher type="server" />
+          <Switcher type="dynamic" />
         </Suspense>
         <PerformanceMetrics />
       </FooterBar>

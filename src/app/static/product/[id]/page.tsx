@@ -1,5 +1,3 @@
-"use client";
-
 import Cart from "@/components/cart/client";
 import ProductDetails from "@/components/product-details/client";
 import RelatedProducts from "@/components/related-products/client";

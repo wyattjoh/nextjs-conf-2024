@@ -1,7 +1,7 @@
 "use client";
 
 import CartShared, { CartSkeleton } from "./shared";
-import { updateQuantity } from "@/app/server/product/[id]/actions";
+import { updateQuantity } from "@/app/dynamic/product/[id]/actions";
 import useSWR, { useSWRConfig } from "swr";
 
 export default function Cart() {
