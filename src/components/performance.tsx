@@ -97,11 +97,6 @@ const PerformanceMetrics = () => {
         <Button className="bg-blue-500 text-primary-foreground shadow hover:bg-blue-400">
           <Gauge />
           Core Web Vitals
-          {lcp > 0 && (
-            <span className="absolute -top-4 -right-2 bg-white text-muted-foreground rounded-md flex items-center justify-center text-xs p-1">
-              {lcp}ms
-            </span>
-          )}
         </Button>
       </SheetTrigger>
       <SheetContent side="bottom" className="flex flex-col gap-4">
