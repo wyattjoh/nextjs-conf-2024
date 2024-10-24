@@ -7,14 +7,10 @@ import useSWR from "swr";
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const { data: product, isLoading: isProductLoading } = useSWR(
-    `/api/product/${id}`,
-    (url) =>
-      fetch(url, { credentials: "same-origin" }).then((res) => res.json())
+    `/api/product/${id}`
   );
   const { data: quantity, isLoading: isQuantityLoading } = useSWR(
-    `/api/product/${id}/quantity`,
-    (url) =>
-      fetch(url, { credentials: "same-origin" }).then((res) => res.json())
+    `/api/product/${id}/quantity`
   );
 
   if (isProductLoading || isQuantityLoading) return <ProductDetailsSkeleton />;

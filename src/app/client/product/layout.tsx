@@ -14,7 +14,14 @@ type Props = {
 
 export default function ClientProductLayout({ children }: Props) {
   return (
-    <SWRConfig>
+    <SWRConfig
+      value={{
+        fetcher: (url) =>
+          fetch(url, {
+            credentials: "same-origin",
+          }).then((res) => res.json()),
+      }}
+    >
       <Suspense>
         <div className="min-h-screen bg-gray-100">
           <div className="flex flex-col lg:flex-row">

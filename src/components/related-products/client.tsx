@@ -7,9 +7,7 @@ import useSWR from "swr";
 export default function RelatedProductsClient() {
   const { id } = useParams<{ id: string }>();
   const { data: relatedProducts, isLoading } = useSWR(
-    `/api/product/${id}/related`,
-    (url) =>
-      fetch(url, { credentials: "same-origin" }).then((res) => res.json())
+    `/api/product/${id}/related`
   );
 
   if (isLoading) return <RelatedProductsSkeleton count={3} />;
