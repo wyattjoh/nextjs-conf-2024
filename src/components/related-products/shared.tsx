@@ -1,16 +1,31 @@
+"use client";
+
 import Image from "next/image";
 import { Card } from "../ui/card";
 import { Product } from "@prisma/client";
+import { usePathname } from "next/navigation";
 
 type Props = {
   relatedProducts: Product[];
 };
 
 export default function RelatedProductsShared({ relatedProducts }: Props) {
+  const pathname = usePathname();
+
+  let prefix;
+  if (pathname.includes("/server")) {
+    prefix = "/server";
+  } else {
+    prefix = "/client";
+  }
+
   return (
     <div className="grid grid-cols-3 gap-6">
       {relatedProducts.map((relatedProduct) => (
-        <a href={`/product/${relatedProduct.id}`} key={relatedProduct.id}>
+        <a
+          href={`${prefix}/product/${relatedProduct.id}`}
+          key={relatedProduct.id}
+        >
           <Card className="p-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer">
             <Image
               src={relatedProduct.image}

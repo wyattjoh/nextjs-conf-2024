@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
+import { RefreshCcw } from "lucide-react";
 
 type Props = {
   type: "client" | "server";
@@ -19,14 +20,17 @@ export default function Switcher({ type }: Props) {
 
   let label;
   if (type === "client") {
-    label = "Go to Server";
+    label = "Switch to Server";
   } else {
-    label = "Go to Client";
+    label = "Switch to Client";
   }
 
   return (
     <Button asChild variant="outline">
-      <a href={href}>{label}</a>
+      <a href={href}>
+        <RefreshCcw />
+        {label}
+      </a>
     </Button>
   );
 }
