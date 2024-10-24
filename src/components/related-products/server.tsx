@@ -1,4 +1,3 @@
-import { use } from "react";
 import RelatedProductsShared from "./shared";
 import { getRelatedProducts } from "@/lib/db";
 
@@ -8,7 +7,7 @@ type Props = {
 };
 
 export default async function RelatedProducts(props: Props) {
-  const { id } = use(props.params);
+  const { id } = await props.params;
   const relatedProducts = await getRelatedProducts(parseInt(id), props.count);
 
   return <RelatedProductsShared relatedProducts={relatedProducts} />;

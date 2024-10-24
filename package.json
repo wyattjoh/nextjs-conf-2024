@@ -23,6 +23,7 @@
     "prisma": "^5.21.0",
     "react": "19.0.0-rc-28668d39-20241023",
     "react-dom": "19.0.0-rc-28668d39-20241023",
+    "swr": "^2.2.5",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
   },

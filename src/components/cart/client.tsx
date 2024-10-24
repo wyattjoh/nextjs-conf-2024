@@ -1,30 +1,15 @@
 "use client";
 
-import { Cart as CartType } from "@/lib/cart";
-import { useEffect, useState } from "react";
 import CartShared, { CartSkeleton } from "./shared";
+import { updateQuantity } from "@/app/server/product/[id]/actions";
+import useSWR from "swr";
 
 export default function Cart() {
-  const [cart, setCart] = useState<CartType>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const getter = async () => {
-      setIsLoading(true);
-      const res = await fetch("/api/cart", {
-        credentials: "same-origin",
-      });
-
-      if (res.ok) {
-        const cart = await res.json();
-        setCart(cart);
-      }
-      setIsLoading(false);
-    };
-
-    getter();
-  }, []);
+  const { data: cart, isLoading } = useSWR("/api/cart", (url) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => res.json())
+  );
 
   if (isLoading) return <CartSkeleton />;
-  return <CartShared cart={cart} />;
+
+  return <CartShared cart={cart} action={updateQuantity} />;
 }

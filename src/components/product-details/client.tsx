@@ -1,38 +1,23 @@
-import { Product } from "@prisma/client";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import ProductDetailsShared, { ProductDetailsSkeleton } from "./shared";
 import QuantityAvailableShared from "../quantity/shared";
 import AddToCartShared from "../add-to-cart/shared";
+import useSWR from "swr";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [quantity, setQuantity] = useState<number | null>(null);
+  const { data: product, isLoading: isProductLoading } = useSWR(
+    `/api/product/${id}`,
+    (url) =>
+      fetch(url, { credentials: "same-origin" }).then((res) => res.json())
+  );
+  const { data: quantity, isLoading: isQuantityLoading } = useSWR(
+    `/api/product/${id}/quantity`,
+    (url) =>
+      fetch(url, { credentials: "same-origin" }).then((res) => res.json())
+  );
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const res = await fetch(`/api/product/${id}`);
-      if (res.ok) {
-        const data = await res.json();
-        setProduct(data);
-      }
-    };
-
-    fetchProduct();
-
-    const fetchQuantity = async () => {
-      const res = await fetch(`/api/product/${id}/quantity`);
-      if (res.ok) {
-        const data = await res.json();
-        setQuantity(data);
-      }
-    };
-
-    fetchQuantity();
-  }, [id]);
-
-  if (!product || !quantity) return <ProductDetailsSkeleton />;
+  if (isProductLoading || isQuantityLoading) return <ProductDetailsSkeleton />;
 
   return (
     <ProductDetailsShared

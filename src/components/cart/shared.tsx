@@ -13,13 +13,13 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import Image from "next/image";
-import { updateQuantity } from "@/app/product/[id]/actions";
 
 type Props = {
   cart: Cart;
+  action: (formData: FormData) => Promise<void>;
 };
 
-export default function CartShared({ cart }: Props) {
+export default function CartShared({ cart, action }: Props) {
   const totalPrice = useMemo(
     () =>
       cart.reduce(
@@ -78,7 +78,7 @@ export default function CartShared({ cart }: Props) {
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <form action={updateQuantity}>
+                        <form action={action}>
                           <input
                             type="hidden"
                             name="id"
@@ -90,7 +90,7 @@ export default function CartShared({ cart }: Props) {
                           </Button>
                         </form>
                         <span>{item.quantity}</span>
-                        <form action={updateQuantity}>
+                        <form action={action}>
                           <input
                             type="hidden"
                             name="id"
