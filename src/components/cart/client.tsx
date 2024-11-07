@@ -2,14 +2,16 @@
 
 import CartShared, { CartSkeleton } from "./shared";
 import { updateQuantity } from "@/app/dynamic/product/[id]/actions";
+import { Cart } from "@/lib/cart";
 import useSWR, { useSWRConfig } from "swr";
 
-export default function Cart() {
-  const { data: cart, isLoading } = useSWR("/api/cart", (url) =>
-    fetch(url, { credentials: "same-origin" }).then((res) => res.json())
-  );
+export default function StaticCart() {
+  // Renders statically, but requires hydration and the
+  // fetch call in order to display the cart.
+  const { data: cart, isLoading } = useSWR<Cart>("/api/cart");
   const config = useSWRConfig();
-  if (isLoading) return <CartSkeleton />;
+
+  if (isLoading || !cart) return <CartSkeleton />;
 
   return (
     <CartShared
