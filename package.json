@@ -19,10 +19,10 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.453.0",
-    "next": "15.0.2-canary.2",
+    "next": "15.5.7",
     "prisma": "^5.21.0",
-    "react": "19.0.0-rc-28668d39-20241023",
-    "react-dom": "19.0.0-rc-28668d39-20241023",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
