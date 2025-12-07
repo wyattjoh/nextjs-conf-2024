@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {},
+  experimental: {
+    ppr: true,
+    dynamicIO: true,
+  },
 };
 
 export default nextConfig;
